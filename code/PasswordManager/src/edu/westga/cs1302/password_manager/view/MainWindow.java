@@ -14,7 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 
 /** Codebehind for the MainWindow of the Application.
  * 
- * @author CS 1302
+ * @author Vitor dos Santos
  * @version Fall 2022
  */
 public class MainWindow {
@@ -45,8 +45,7 @@ public class MainWindow {
     		alertWindow.showAndWait();
     		return;
     	}
-    	
-    	
+    		
     	this.cmbCredentialList.getItems().remove(selectedSystem);
     }
 
@@ -95,6 +94,12 @@ public class MainWindow {
     	this.userName.setText(selectedCredential.getUserName());
     	this.password.setText(selectedCredential.getPassword());
     }
+    
+    @FXML
+    void updateCredential(ActionEvent event) {
+
+    }
+    
 
     @FXML
     void initialize() {
