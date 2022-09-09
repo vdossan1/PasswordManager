@@ -29,7 +29,7 @@ public class CredentialManager {
 	}
 	
 	/**
-	 * Add a system data object to the System Data List
+	 * Add a credential object to the CredentialManager if the system name for that object does not exists in the list already
 	 * 
 	 * @precondition credential != null
 	 * @postcondition this.getSize() == this.getSize()@prev + 1
@@ -44,12 +44,22 @@ public class CredentialManager {
 			throw new IllegalArgumentException("Credential cannot be null");
 		}
 		
+		if (!this.checkIfSystemNameExists(credential)) {
+			return this.credentialsList.add(credential);
+		} else {
+			return false;
+		}
+		
+		
+	}
+	
+	private boolean checkIfSystemNameExists(Credential credential) {
 		for (Credential sysName: this.credentialsList) {
 			if (sysName.getSystemName().equals(credential.getSystemName())) {
-				return false;
+				return true;
 			}
 		}
-		return this.credentialsList.add(credential);
+		return false;
 	}
 	
 	/**
@@ -72,7 +82,7 @@ public class CredentialManager {
 	}
 	
 	/**
-	 * Returns a list with the system names in the list
+	 * Returns an array list with all the system names in the credentialsList
 	 * 
 	 * @precondition none
 	 * @postcondition none
