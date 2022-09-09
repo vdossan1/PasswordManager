@@ -350,4 +350,63 @@ class TestCredentialManager {
 		
 		assertTrue(newManager.removeCredential(systemName));
 	}
+	
+	@Test
+	void testUpdateCredentialUpdateNameWithOneCredential() {
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+		
+		CredentialManager newManager = new CredentialManager();
+			newManager.addCredential(newCredential);
+			
+		String newSystemName = "whatsapp";
+		String newUserName = "vitor";
+		String newPassword = "123456";
+			
+		newManager.updateCredential(newCredential, newSystemName, newUserName, newPassword);
+		
+		assertEquals(newSystemName, newManager.getCredentialWithSpecifiedName(newSystemName).getSystemName());
+	}
+	
+	@Test
+	void testUpdateCredentialUpdateNameWithMultipleCredentials() {
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+			
+		Credential newCredentialTwo = new Credential();
+			newCredentialTwo.setSystemName("whatsapp");
+			newCredentialTwo.setUserName("hugo");
+			newCredentialTwo.setPassword("987654321");
+		
+		CredentialManager newManager = new CredentialManager();
+			newManager.addCredential(newCredential);
+			newManager.addCredential(newCredentialTwo);
+			
+		String newSystemName = "snapchat";
+		String newUserName = "santos";
+		String newPassword = "54687";
+			
+		newManager.updateCredential(newCredentialTwo, newSystemName, newUserName, newPassword);
+		
+		assertEquals(newSystemName, newManager.getCredentialWithSpecifiedName(newSystemName).getSystemName());
+	}
+	
+	@Test
+	void testUpdateCredentialWithEmptyList() {
+		
+		Credential newCredential = new Credential();
+		CredentialManager newManager = new CredentialManager();
+			
+		String newSystemName = "whatsapp";
+		String newUserName = "vitor";
+		String newPassword = "123456";
+			
+		assertThrows(IllegalStateException.class, () -> {
+			newManager.updateCredential(newCredential, newSystemName, newUserName, newPassword);
+		});
+	}
 }

@@ -41,7 +41,7 @@ public class CredentialManager {
 	public boolean addCredential(Credential credential) {
 		
 		if (credential == null) {
-			throw new IllegalArgumentException("Credential cannot be null");
+			throw new IllegalArgumentException(CharacterUtility.NULL_CREDENTIAL_ERROR);
 		}
 		
 		if (!this.checkIfSystemNameExists(credential.getSystemName())) {
@@ -112,15 +112,15 @@ public class CredentialManager {
 	public Credential getCredentialWithSpecifiedName(String systemName) {
 		
 		if (systemName == null) {
-			throw new IllegalArgumentException(ChracterUtility.NULL_SYSTEM_ERROR);
+			throw new IllegalArgumentException(CharacterUtility.NULL_SYSTEM_ERROR);
 		}
 		
 		if (systemName.isEmpty()) {
-			throw new IllegalArgumentException(ChracterUtility.EMPTY_SYSTEM_NAME_ERROR);
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_SYSTEM_NAME_ERROR);
 		}
 		
 		if (!this.checkIfSystemNameExists(systemName)) {
-			throw new IllegalArgumentException(ChracterUtility.SYSTEM_DO_NOT_EXIST_ERROR);
+			throw new IllegalArgumentException(CharacterUtility.SYSTEM_DO_NOT_EXIST_ERROR);
 		}
 		
 		Credential selectedCredential = null;
@@ -147,23 +147,54 @@ public class CredentialManager {
 	public boolean removeCredential(String systemName) {
 		
 		if (this.getSize() == 0) {
-			throw new IllegalStateException(ChracterUtility.EMPY_LIST_ERROR);
+			throw new IllegalStateException(CharacterUtility.EMPY_LIST_ERROR);
 		}
 		
 		if (systemName == null) {
-			throw new IllegalArgumentException(ChracterUtility.NULL_SYSTEM_ERROR);
+			throw new IllegalArgumentException(CharacterUtility.NULL_SYSTEM_ERROR);
 		}
 		
 		if (systemName.isEmpty()) {
-			throw new IllegalArgumentException(ChracterUtility.EMPTY_SYSTEM_NAME_ERROR);
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_SYSTEM_NAME_ERROR);
 		}
 		
 		if (!this.checkIfSystemNameExists(systemName)) {
-			throw new IllegalArgumentException(ChracterUtility.SYSTEM_DO_NOT_EXIST_ERROR);
+			throw new IllegalArgumentException(CharacterUtility.SYSTEM_DO_NOT_EXIST_ERROR);
 		}
 		
 		Credential credentialToBeRemoved = this.getCredentialWithSpecifiedName(systemName);
 		
 		return this.credentialsList.remove(credentialToBeRemoved);
+	}
+	
+	/**
+	 * Update the specified credential with the new information
+	 * 
+	 * @precondition 
+	 * @postcondition 
+	 * 
+	 * @param credential the credential to be updated
+	 * @param systemName the new system name
+	 * @param userName the new user name
+	 * @param password the new password
+	 */
+	public void updateCredential(Credential credential, String systemName, String userName, String password) {
+		
+		if (this.getSize() == 0) {
+			throw new IllegalStateException(CharacterUtility.EMPY_LIST_ERROR);
+		}
+		
+		if (credential == null) {
+			throw new IllegalArgumentException(CharacterUtility.NULL_CREDENTIAL_ERROR);
+		}
+		
+		if (this.checkIfSystemNameExists(systemName)) {
+			throw new IllegalArgumentException(CharacterUtility.SYSTEM_ALREADY_EXISTS);
+		}
+		
+		
+		credential.setSystemName(systemName);
+		credential.setUserName(userName);
+		credential.setPassword(password);
 	}
 }

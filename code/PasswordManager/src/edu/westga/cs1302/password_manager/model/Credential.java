@@ -35,10 +35,10 @@ public class Credential {
 	 */
 	public void setSystemName(String systemName) {
 		if (systemName == null) {
-			throw new IllegalArgumentException("System Name cannot be null");
+			throw new IllegalArgumentException(CharacterUtility.NULL_SYSTEM_ERROR);
 		}
 		if (systemName.isEmpty()) {
-			throw new IllegalArgumentException("System Name cannot be empty");
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_SYSTEM_NAME_ERROR);
 		}
 		this.systemName = systemName;
 	}
@@ -66,10 +66,10 @@ public class Credential {
 	 */
 	public void setUserName(String userName) {
 		if (userName == null) {
-			throw new IllegalArgumentException("User name cannot be null");
+			throw new IllegalArgumentException(CharacterUtility.NULL_USER_NAME_ERROR);
 		}
 		if (userName.isEmpty()) {
-			throw new IllegalArgumentException("User name cannot be empty");
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_USER_NAME_ERROR);
 		}
 		this.userName = userName;
 	}
@@ -97,10 +97,10 @@ public class Credential {
 	 */
 	public void setPassword(String password) {
 		if (password == null) {
-			throw new IllegalArgumentException("Password cannot be null");
+			throw new IllegalArgumentException(CharacterUtility.NULL_PASSWORD_ERROR);
 		}
 		if (password.isEmpty()) {
-			throw new IllegalArgumentException("Password cannot be empty");
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_PASSWORD_ERROR);
 		}
 		this.password = password;
 	}
