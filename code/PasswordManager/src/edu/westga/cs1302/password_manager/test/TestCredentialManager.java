@@ -268,4 +268,86 @@ class TestCredentialManager {
 			newManager.getCredentialWithSpecifiedName(systemName);
 		});
 	}
+	
+	@Test
+	void testRemoveCredentialWithEmptyList() {
+		CredentialManager newManager = new CredentialManager();
+		
+		String systemName = "facebook";
+		
+		assertThrows(IllegalStateException.class, () -> {
+			newManager.removeCredential(systemName);
+		});
+	}
+	
+	@Test
+	void testRemoveCredentialWithWithNullParameter() {
+		
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+		
+		CredentialManager newManager = new CredentialManager();
+			newManager.addCredential(newCredential);	
+		
+		String systemName = null;
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			newManager.removeCredential(systemName);
+		});
+	}
+	
+	@Test
+	void testRemoveCredentialWithEmptyParameter() {
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+		
+		CredentialManager newManager = new CredentialManager();
+			newManager.addCredential(newCredential);	
+		
+		String systemName = "";
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			newManager.removeCredential(systemName);
+		});
+	}
+	
+	@Test
+	void testRemoveCredentialWithOneParameter() {
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+		
+		CredentialManager newManager = new CredentialManager();
+			newManager.addCredential(newCredential);	
+		
+		String systemName = "facebook";
+		
+		assertTrue(newManager.removeCredential(systemName));
+	}
+	
+	@Test
+	void testRemoveCredentialWithMultipleParameter() {
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+			
+		Credential newCredentialTwo = new Credential();
+			newCredentialTwo.setSystemName("whatsapp");
+			newCredentialTwo.setUserName("hugo");
+			newCredentialTwo.setPassword("987654321");
+		
+		CredentialManager newManager = new CredentialManager();
+			newManager.addCredential(newCredential);
+			newManager.addCredential(newCredentialTwo);
+		
+		String systemName = "whatsapp";
+		
+		assertTrue(newManager.removeCredential(systemName));
+	}
 }

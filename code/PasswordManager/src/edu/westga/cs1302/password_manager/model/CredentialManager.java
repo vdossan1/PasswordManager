@@ -112,15 +112,15 @@ public class CredentialManager {
 	public Credential getCredentialWithSpecifiedName(String systemName) {
 		
 		if (systemName == null) {
-			throw new IllegalArgumentException("System name cannot be null");
+			throw new IllegalArgumentException(ChracterUtility.NULL_SYSTEM_ERROR);
 		}
 		
 		if (systemName.isEmpty()) {
-			throw new IllegalArgumentException("System name cannot be empty");
+			throw new IllegalArgumentException(ChracterUtility.EMPTY_SYSTEM_NAME_ERROR);
 		}
 		
 		if (!this.checkIfSystemNameExists(systemName)) {
-			throw new IllegalArgumentException("That system requested does not exist");
+			throw new IllegalArgumentException(ChracterUtility.SYSTEM_DO_NOT_EXIST_ERROR);
 		}
 		
 		Credential selectedCredential = null;
@@ -132,5 +132,38 @@ public class CredentialManager {
     	}
 		
 		return selectedCredential;
+	}
+	
+	/**
+	 * Remove the credentials with specified system name
+	 * 
+	 * @precondition systemName != null & !systemName.isEmpty
+	 * @postcondition this.getSize() == this.getSize()@prev - 1
+	 * 
+	 * @param systemName the name of the system that should be removed
+	 * 
+	 * @return true is the system has been removed
+	 */
+	public boolean removeCredential(String systemName) {
+		
+		if (this.getSize() == 0) {
+			throw new IllegalStateException("The list is empty");
+		}
+		
+		if (systemName == null) {
+			throw new IllegalArgumentException(ChracterUtility.NULL_SYSTEM_ERROR);
+		}
+		
+		if (systemName.isEmpty()) {
+			throw new IllegalArgumentException(ChracterUtility.EMPTY_SYSTEM_NAME_ERROR);
+		}
+		
+		if (!this.checkIfSystemNameExists(systemName)) {
+			throw new IllegalArgumentException(ChracterUtility.SYSTEM_DO_NOT_EXIST_ERROR);
+		}
+		
+		Credential credentialToBeRemoved = this.getCredentialWithSpecifiedName(systemName);
+		
+		return this.credentialsList.remove(credentialToBeRemoved);
 	}
 }
