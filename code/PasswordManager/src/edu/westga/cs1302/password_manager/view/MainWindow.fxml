@@ -14,7 +14,8 @@
       <TextField fx:id="systemName" layoutX="126.0" layoutY="53.0" />
       <TextField fx:id="userName" layoutX="126.0" layoutY="94.0" />
       <TextField fx:id="password" layoutX="126.0" layoutY="139.0" />
-      <Button layoutX="126.0" layoutY="196.0" mnemonicParsing="false" onAction="#submitCredential" prefHeight="25.0" prefWidth="149.0" text="Submit" />
+      <Button layoutX="41.0" layoutY="196.0" mnemonicParsing="false" onAction="#submitCredential" prefHeight="25.0" prefWidth="137.0" text="Submit" />
       <ComboBox fx:id="cmbCredentialList" layoutX="125.0" layoutY="255.0" onAction="#systemSelected" prefWidth="150.0" />
+      <Button layoutX="224.0" layoutY="196.0" mnemonicParsing="false" onAction="#removeCredential" prefHeight="25.0" prefWidth="137.0" text="Remove" />
    </children>
 </AnchorPane>

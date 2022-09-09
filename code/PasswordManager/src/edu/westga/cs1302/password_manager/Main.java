@@ -7,7 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+/**
+ * Launches the GUI for the password manager
+ * 
+ * @author Vitor dos Santos
+ * @version Fall 2022
+ *
+ */
 public class Main extends Application {
 	private static final String WINDOW_TITLE = "Password Manager";
 	private static final String GUI_RESOURCE = "view/MainWindow.fxml";

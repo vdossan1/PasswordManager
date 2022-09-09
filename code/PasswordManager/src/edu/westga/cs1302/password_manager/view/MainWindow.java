@@ -32,6 +32,11 @@ public class MainWindow {
     @FXML private TextField userName;
     
     private CredentialManager credentialManager;
+    
+    @FXML
+    void removeCredential(ActionEvent event) {
+
+    }
 
     @FXML void submitCredential(ActionEvent event) {
     	Credential newCredential = new Credential();
