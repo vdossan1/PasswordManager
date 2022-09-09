@@ -147,7 +147,7 @@ public class CredentialManager {
 	public boolean removeCredential(String systemName) {
 		
 		if (this.getSize() == 0) {
-			throw new IllegalStateException("The list is empty");
+			throw new IllegalStateException(ChracterUtility.EMPY_LIST_ERROR);
 		}
 		
 		if (systemName == null) {

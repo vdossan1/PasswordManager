@@ -35,7 +35,19 @@ public class MainWindow {
     
     @FXML
     void removeCredential(ActionEvent event) {
-
+    	String selectedSystem = this.cmbCredentialList.getValue();
+    	
+    	try {
+    		this.credentialManager.removeCredential(selectedSystem);
+    	} catch (IllegalArgumentException e) {
+    		Alert alertWindow = new Alert(AlertType.ERROR);
+    		alertWindow.setContentText(e.getMessage());
+    		alertWindow.showAndWait();
+    		return;
+    	}
+    	
+    	
+    	this.cmbCredentialList.getItems().remove(selectedSystem);
     }
 
     @FXML void submitCredential(ActionEvent event) {
