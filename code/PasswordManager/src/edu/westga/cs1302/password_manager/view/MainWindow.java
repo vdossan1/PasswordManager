@@ -58,6 +58,11 @@ public class MainWindow {
     	this.cmbCredentialList.getItems().removeAll(this.credentialManager.listOfSystemNames());
     	this.cmbCredentialList.getItems().addAll(this.credentialManager.listOfSystemNames());
     }
+    
+    @FXML
+    void systemSelected(ActionEvent event) {
+    	
+    }
 
     @FXML
     void initialize() {
