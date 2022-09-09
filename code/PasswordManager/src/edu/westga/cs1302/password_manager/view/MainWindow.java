@@ -63,8 +63,16 @@ public class MainWindow {
     void systemSelected(ActionEvent event) {
     	
     	String selectedSystem = this.cmbCredentialList.getValue();
+    	Credential selectedCredential = null;
     	
-    	Credential selectedCredential = this.credentialManager.getCredentialWithSpecifiedName(selectedSystem);
+    	try {
+    		selectedCredential = this.credentialManager.getCredentialWithSpecifiedName(selectedSystem);
+    	} catch (IllegalArgumentException e) {
+    		Alert alertWindow = new Alert(AlertType.ERROR);
+    		alertWindow.setContentText(e.getMessage());
+    		alertWindow.showAndWait();
+    		return;
+    	}
     	
     	this.systemName.setText(selectedCredential.getSystemName());
     	this.userName.setText(selectedCredential.getUserName());
