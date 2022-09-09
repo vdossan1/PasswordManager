@@ -62,6 +62,13 @@ public class MainWindow {
     @FXML
     void systemSelected(ActionEvent event) {
     	
+    	String selectedSystem = this.cmbCredentialList.getValue();
+    	
+    	Credential selectedCredential = this.credentialManager.getCredentialWithSpecifiedName(selectedSystem);
+    	
+    	this.systemName.setText(selectedCredential.getSystemName());
+    	this.userName.setText(selectedCredential.getUserName());
+    	this.password.setText(selectedCredential.getPassword());
     }
 
     @FXML

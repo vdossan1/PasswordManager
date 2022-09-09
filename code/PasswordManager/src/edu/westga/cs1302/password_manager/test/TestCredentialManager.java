@@ -173,4 +173,99 @@ class TestCredentialManager {
 		
 		assertEquals(credentialsList, newManager.listOfSystemNames());
 	}
+	
+	@Test
+	void testGetCredentialWithSpecifiedNameWithEmptyList() {
+		CredentialManager newManager = new CredentialManager();
+		
+		String systemName = "facebook";
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			newManager.getCredentialWithSpecifiedName(systemName);
+		});
+	}
+	
+	@Test
+	void testGetCredentialWithSpecifiedNameWithNullParameter() {
+		CredentialManager newManager = new CredentialManager();
+		
+		String systemName = null;
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			newManager.getCredentialWithSpecifiedName(systemName);
+		});
+	}
+	
+	@Test
+	void testGetCredentialWithSpecifiedNameWithEmptyParameter() {
+		CredentialManager newManager = new CredentialManager();
+		
+		String systemName = "";
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			newManager.getCredentialWithSpecifiedName(systemName);
+		});
+	}
+	
+	@Test
+	void testGetCredentialWithSpecifiedNameWithOneValidParameter() {
+		
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+			
+		CredentialManager newManager = new CredentialManager();
+		newManager.addCredential(newCredential);
+			
+		String systemName = "facebook";
+		
+		assertEquals(newCredential, newManager.getCredentialWithSpecifiedName(systemName));
+	}
+	
+	@Test
+	void testGetCredentialWithSpecifiedNameWithMultipleValidParameter() {
+		
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+			
+		Credential newCredentialTwo = new Credential();
+			newCredentialTwo.setSystemName("whatsapp");
+			newCredentialTwo.setUserName("hugo");
+			newCredentialTwo.setPassword("987654321");
+		
+		CredentialManager newManager = new CredentialManager();
+			newManager.addCredential(newCredential);
+			newManager.addCredential(newCredentialTwo);
+			
+		String systemName = "whatsapp";
+		
+		assertEquals(newCredentialTwo, newManager.getCredentialWithSpecifiedName(systemName));
+	}
+	
+	@Test
+	void testGetCredentialWithSpecifiedNameWithMultipleInvalidParameter() {
+		
+		Credential newCredential = new Credential();
+			newCredential.setSystemName("facebook");
+			newCredential.setUserName("vitor");
+			newCredential.setPassword("123456789");
+			
+		Credential newCredentialTwo = new Credential();
+			newCredentialTwo.setSystemName("whatsapp");
+			newCredentialTwo.setUserName("hugo");
+			newCredentialTwo.setPassword("987654321");
+		
+		CredentialManager newManager = new CredentialManager();
+			newManager.addCredential(newCredential);
+			newManager.addCredential(newCredentialTwo);
+			
+		String systemName = "snapchat";
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			newManager.getCredentialWithSpecifiedName(systemName);
+		});
+	}
 }

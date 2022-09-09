@@ -44,18 +44,17 @@ public class CredentialManager {
 			throw new IllegalArgumentException("Credential cannot be null");
 		}
 		
-		if (!this.checkIfSystemNameExists(credential)) {
+		if (!this.checkIfSystemNameExists(credential.getSystemName())) {
 			return this.credentialsList.add(credential);
 		} else {
 			return false;
 		}
 		
-		
 	}
 	
-	private boolean checkIfSystemNameExists(Credential credential) {
+	private boolean checkIfSystemNameExists(String systemName) {
 		for (Credential sysName: this.credentialsList) {
-			if (sysName.getSystemName().equals(credential.getSystemName())) {
+			if (sysName.getSystemName().equals(systemName)) {
 				return true;
 			}
 		}
@@ -98,5 +97,40 @@ public class CredentialManager {
 		}
 		
 		return systemNamesList;
+	}
+	
+	/**
+	 * Get a specific credential object that matches the system name provided in the parameter
+	 * 
+	 * @precondition systemName != null & !systemName.isEmpty
+	 * @postcondition none
+	 * 
+	 * @param systemName the name of the system that should be returned
+	 * 
+	 * @return credential the credential with system name matching the parameter
+	 */
+	public Credential getCredentialWithSpecifiedName(String systemName) {
+		
+		if (systemName == null) {
+			throw new IllegalArgumentException("System name cannot be null");
+		}
+		
+		if (systemName.isEmpty()) {
+			throw new IllegalArgumentException("System name cannot be empty");
+		}
+		
+		if (!this.checkIfSystemNameExists(systemName)) {
+			throw new IllegalArgumentException("That system requested does not exist");
+		}
+		
+		Credential selectedCredential = null;
+		
+		for (Credential credential: this.credentialsList) {
+    		if (credential.getSystemName().equals(systemName)) {
+    			selectedCredential = credential;
+    		}
+    	}
+		
+		return selectedCredential;
 	}
 }
