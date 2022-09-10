@@ -7,10 +7,8 @@ import edu.westga.cs1302.password_manager.model.Credential;
 import edu.westga.cs1302.password_manager.model.CredentialManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 
 /** Codebehind for the MainWindow of the Application.
  * 
@@ -34,73 +32,87 @@ public class MainWindow {
     private CredentialManager credentialManager;
     
     @FXML
-    void removeCredential(ActionEvent event) {
+    void systemSelected(ActionEvent event) {
+    	
     	String selectedSystem = this.cmbCredentialList.getValue();
+   
+    	Credential selectedCredential = null;
+    	
+    	if (selectedSystem != null) {
+    		try {
+        		selectedCredential = this.credentialManager.getCredentialWithSpecifiedName(selectedSystem);
+        	} catch (IllegalArgumentException e) {
+        		JavaFXUtility.alertWindow(e);
+        	}
+    		
+    		this.systemName.setText(selectedCredential.getSystemName());
+        	this.userName.setText(selectedCredential.getUserName());
+        	this.password.setText(selectedCredential.getPassword());       	
+    	}
+    }
+    
+    @FXML 
+    void removeCredential(ActionEvent event) {
+    
+    	String selectedSystem = this.systemName.getText();
     	
     	try {
     		this.credentialManager.removeCredential(selectedSystem);
     	} catch (IllegalArgumentException e) {
-    		Alert alertWindow = new Alert(AlertType.ERROR);
-    		alertWindow.setContentText(e.getMessage());
-    		alertWindow.showAndWait();
-    		return;
+    		JavaFXUtility.alertWindow(e);
+    	} catch (IllegalStateException e) {
+    		JavaFXUtility.alertWindow(e);
     	}
-    		
+    	
     	this.cmbCredentialList.getItems().remove(selectedSystem);
+    	this.cmbCredentialList.getItems().setAll(this.credentialManager.listOfSystemNames());
+    	
+    	this.systemName.clear();
+    	this.userName.clear();
+    	this.password.clear();
+    	
     }
 
-    @FXML void submitCredential(ActionEvent event) {
-    	Credential newCredential = new Credential();
+    @FXML 
+    void submitCredential(ActionEvent event) {
+    	Credential newCredential = null;
     	
     	try {
-    		newCredential.setSystemName(this.systemName.getText());
-    		newCredential.setUserName(this.userName.getText());
-    		newCredential.setPassword(this.password.getText());
+    		newCredential = new Credential(
+    				this.systemName.getText(),
+    				this.userName.getText(),
+    				this.password.getText());
+    		this.credentialManager.addCredential(newCredential);
     	} catch (IllegalArgumentException e) {
-    		Alert alertWindow = new Alert(AlertType.ERROR);
-    		alertWindow.setContentText(e.getMessage());
-    		alertWindow.showAndWait();
-    		return;
+    		JavaFXUtility.alertWindow(e);
     	}
     	
-    	if (!this.credentialManager.addCredential(newCredential)) {
-    		Alert alertWindow = new Alert(AlertType.ERROR);
-    		alertWindow.setContentText("System name already exists");
-    		alertWindow.showAndWait();
-    		return;
-    	}
+    	this.cmbCredentialList.getItems().setAll(this.credentialManager.listOfSystemNames());
     	
-    	
-    	this.cmbCredentialList.getItems().removeAll(this.credentialManager.listOfSystemNames());
-    	this.cmbCredentialList.getItems().addAll(this.credentialManager.listOfSystemNames());
-    }
-    
-    @FXML
-    void systemSelected(ActionEvent event) {
-    	
-    	String selectedSystem = this.cmbCredentialList.getValue();
-    	Credential selectedCredential = null;
-    	
-    	try {
-    		selectedCredential = this.credentialManager.getCredentialWithSpecifiedName(selectedSystem);
-    	} catch (IllegalArgumentException e) {
-    		Alert alertWindow = new Alert(AlertType.ERROR);
-    		alertWindow.setContentText(e.getMessage());
-    		alertWindow.showAndWait();
-    		return;
-    	}
-    	
-    	this.systemName.setText(selectedCredential.getSystemName());
-    	this.userName.setText(selectedCredential.getUserName());
-    	this.password.setText(selectedCredential.getPassword());
+    	this.systemName.clear();
+    	this.userName.clear();
+    	this.password.clear();
     }
     
     @FXML
     void updateCredential(ActionEvent event) {
-
+    	
+    	String selectedSystem = this.systemName.getText();
+    	
+    	String newUserName = this.userName.getText();
+    	String newPassword = this.password.getText();
+    	
+    	try {
+    		this.credentialManager.updateCredential(selectedSystem, newUserName, newPassword);
+    	} catch (IllegalStateException e) {
+    		JavaFXUtility.alertWindow(e);
+    	} catch (IllegalArgumentException e) {
+    		JavaFXUtility.alertWindow(e);
+    	}
+    	
+    	//this.cmbCredentialList.getItems().setAll(this.credentialManager.listOfSystemNames());
     }
     
-
     @FXML
     void initialize() {
         assert this.cmbCredentialList != null : "fx:id=\"cmbCredentialList\" was not injected: check your FXML file 'MainWindow.fxml'.";

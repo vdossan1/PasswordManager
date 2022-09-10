@@ -29,14 +29,14 @@ public class CredentialManager {
 	}
 	
 	/**
-	 * Add a credential object to the CredentialManager if the system name for that object does not exists in the list already
+	 * Add a credential object to the CredentialManager if the system name does not exist on the credentialsList
 	 * 
 	 * @precondition credential != null
 	 * @postcondition this.getSize() == this.getSize()@prev + 1
 	 * 
 	 * @param credential the credential to be added to the this.credentialList
 	 * 
-	 * @return true if the credential was added to the list
+	 * @return true if the credential is added, throw an exception if it does not
 	 */
 	public boolean addCredential(Credential credential) {
 		
@@ -44,10 +44,10 @@ public class CredentialManager {
 			throw new IllegalArgumentException(CharacterUtility.NULL_CREDENTIAL_ERROR);
 		}
 		
-		if (!this.checkIfSystemNameExists(credential.getSystemName())) {
-			return this.credentialsList.add(credential);
+		if (this.checkIfSystemNameExists(credential.getSystemName())) {
+			throw new IllegalArgumentException(CharacterUtility.SYSTEM_ALREADY_EXISTS);
 		} else {
-			return false;
+			return this.credentialsList.add(credential);
 		}
 		
 	}
@@ -162,7 +162,7 @@ public class CredentialManager {
 			throw new IllegalArgumentException(CharacterUtility.SYSTEM_DO_NOT_EXIST_ERROR);
 		}
 		
-		Credential credentialToBeRemoved = this.getCredentialWithSpecifiedName(systemName);
+		Credential credentialToBeRemoved = this.getCredentialWithSpecifiedName(systemName);	
 		
 		return this.credentialsList.remove(credentialToBeRemoved);
 	}
@@ -173,28 +173,43 @@ public class CredentialManager {
 	 * @precondition 
 	 * @postcondition 
 	 * 
-	 * @param credential the credential to be updated
 	 * @param systemName the new system name
 	 * @param userName the new user name
 	 * @param password the new password
 	 */
-	public void updateCredential(Credential credential, String systemName, String userName, String password) {
+	public void updateCredential(String systemName, String userName, String password) {
 		
 		if (this.getSize() == 0) {
 			throw new IllegalStateException(CharacterUtility.EMPY_LIST_ERROR);
 		}
 		
-		if (credential == null) {
-			throw new IllegalArgumentException(CharacterUtility.NULL_CREDENTIAL_ERROR);
+		if (systemName == null) {
+			throw new IllegalArgumentException(CharacterUtility.NULL_SYSTEM_ERROR);
+		}
+		if (systemName.isEmpty()) {
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_SYSTEM_NAME_ERROR);
 		}
 		
-		if (this.checkIfSystemNameExists(systemName)) {
-			throw new IllegalArgumentException(CharacterUtility.SYSTEM_ALREADY_EXISTS);
+		if (userName == null) {
+			throw new IllegalArgumentException(CharacterUtility.NULL_USER_NAME_ERROR);
+		}
+		if (userName.isEmpty()) {
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_USER_NAME_ERROR);
 		}
 		
+		if (password == null) {
+			throw new IllegalArgumentException(CharacterUtility.NULL_PASSWORD_ERROR);
+		}
 		
-		credential.setSystemName(systemName);
-		credential.setUserName(userName);
-		credential.setPassword(password);
+		if (password.isEmpty()) {
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_PASSWORD_ERROR);
+		}
+		
+		Credential credentialToChange = this.getCredentialWithSpecifiedName(systemName);
+		
+		credentialToChange.setUserName(userName);
+		credentialToChange.setPassword(password);
+		
+		
 	}
 }

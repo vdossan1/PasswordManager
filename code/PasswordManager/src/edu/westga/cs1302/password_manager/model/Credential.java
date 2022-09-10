@@ -12,6 +12,52 @@ public class Credential {
 	private String userName;
 	private String password;
 	
+	
+	/**
+	 * Creates a Credential object with all the fields
+	 * 
+	 * @precondition systemName != null && systemName != systemName.isEmpty()
+	 * 				 getUserName != null && getUserName != getUserName.isEmpty()
+	 * 				 getPassword != null && getPassword != getPassword.isEmpty()
+	 * @postcondition getSystemName() == systemName
+	 * 				  getUserName() == userName
+	 * 				  getPassword() == password
+	 * 
+	 * @param systemName system name to be added to the credential
+	 * @param userName user name to be added to the credential
+	 * @param password password to be added to the credential
+	 */
+	public Credential(String systemName, String userName, String password) {
+		
+		if (systemName == null) {
+			throw new IllegalArgumentException(CharacterUtility.NULL_SYSTEM_ERROR);
+		}
+		
+		if (systemName.isEmpty()) {
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_SYSTEM_NAME_ERROR);
+		}
+		
+		if (userName == null) {
+			throw new IllegalArgumentException(CharacterUtility.NULL_USER_NAME_ERROR);
+		}
+		
+		if (userName.isEmpty()) {
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_USER_NAME_ERROR);
+		}
+		
+		if (password == null) {
+			throw new IllegalArgumentException(CharacterUtility.NULL_PASSWORD_ERROR);
+		}
+		
+		if (password.isEmpty()) {
+			throw new IllegalArgumentException(CharacterUtility.EMPTY_PASSWORD_ERROR);
+		}
+		
+		this.systemName = systemName;
+		this.userName = userName;
+		this.password = password;
+	}
+
 	/**
 	 * Get the system name
 	 * 
@@ -37,6 +83,7 @@ public class Credential {
 		if (systemName == null) {
 			throw new IllegalArgumentException(CharacterUtility.NULL_SYSTEM_ERROR);
 		}
+		
 		if (systemName.isEmpty()) {
 			throw new IllegalArgumentException(CharacterUtility.EMPTY_SYSTEM_NAME_ERROR);
 		}
@@ -68,6 +115,7 @@ public class Credential {
 		if (userName == null) {
 			throw new IllegalArgumentException(CharacterUtility.NULL_USER_NAME_ERROR);
 		}
+		
 		if (userName.isEmpty()) {
 			throw new IllegalArgumentException(CharacterUtility.EMPTY_USER_NAME_ERROR);
 		}
@@ -99,6 +147,7 @@ public class Credential {
 		if (password == null) {
 			throw new IllegalArgumentException(CharacterUtility.NULL_PASSWORD_ERROR);
 		}
+		
 		if (password.isEmpty()) {
 			throw new IllegalArgumentException(CharacterUtility.EMPTY_PASSWORD_ERROR);
 		}

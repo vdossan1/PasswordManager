@@ -20,8 +20,8 @@ public class CharacterUtility {
 	
 	
 	static final String SYSTEM_DO_NOT_EXIST_ERROR = "The system requested does not exist";
-	static final String EMPY_LIST_ERROR = "The list is empty";
 	static final String SYSTEM_ALREADY_EXISTS = "The system name already exists";
+	static final String EMPY_LIST_ERROR = "The list is empty";
 	static final String NULL_CREDENTIAL_ERROR = "Credential cannot be null";
 	
 }
