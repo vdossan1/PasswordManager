@@ -137,7 +137,7 @@ public class CredentialManager {
 	/**
 	 * Remove the credentials with specified system name
 	 * 
-	 * @precondition systemName != null & !systemName.isEmpty
+	 * @precondition systemName != null && !systemName.isEmpty
 	 * @postcondition this.getSize() == this.getSize()@prev - 1
 	 * 
 	 * @param systemName the name of the system that should be removed
@@ -170,8 +170,11 @@ public class CredentialManager {
 	/**
 	 * Update the specified credential with the new information
 	 * 
-	 * @precondition 
-	 * @postcondition 
+	 * @precondition systemName != null && systemName != systemName.isEmpty()
+	 * 				 getUserName != null && getUserName != getUserName.isEmpty()
+	 * 				 getPassword != null && getPassword != getPassword.isEmpty()
+	 * @postcondition this.getCredentialWithSpecifiedName(systemName).getUserName.equals(userName)
+	 * 				  this.getCredentialWithSpecifiedName(systemName).getPassword.equals(password)
 	 * 
 	 * @param systemName the new system name
 	 * @param userName the new user name
